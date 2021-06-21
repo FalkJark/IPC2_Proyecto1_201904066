@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
+from Interfaz.ventana_tablero import v_tablero
 import db
 
 class v_parametros():
@@ -14,9 +15,14 @@ class v_parametros():
         root.withdraw()
         ventana_parametros.focus_force()
 #*********************************************************************************
-    def acciones(self,cb1,cb2,filas,columnas,tiempo):
+    def abrir_ventana_tablero(self,ventana):
+        v_tab = v_tablero(ventana)
+
+#----------------------------------------------------------------    
+    def acciones(self,cb1,cb2,filas,columnas,tiempo,ventana):
         p1= cb1.get()
         p2= cb2.get()
+        
         if p1 == "" or p2 == "":
             messagebox.showinfo('Dato erroneo','debes elegir un color por jugador')
         elif p1 == p2:
@@ -24,21 +30,28 @@ class v_parametros():
         elif filas == '' or columnas == '' or tiempo == '':
             messagebox.showinfo('Dato Vacio','llena todos los campos del tablero')
         else:
-            try:
-                tiempo = int(tiempo.get())
-                if tiempo<15 or tiempo>60:
-                    messagebox.showinfo('Exceso','el tiempo no puede ser mayor de 60 y menor de 15 seg')
+            #try:
+            tiempo = int(tiempo.get())
+            filas = int(filas.get())
+            columnas = int(columnas.get())
+            print('entra al try')
+            
+            if tiempo<15 or tiempo>60:
+                messagebox.showinfo('Exceso','el tiempo no puede ser mayor de 60 y menor de 15 seg')
+            else:
+                if int(filas)<4 or int(columnas)<4:
+                    messagebox.showinfo('Error Dimensiones','el tablero debe tener una dimension minima de 4x4')
                 else:
-                    if int(filas.get())<4 or int(columnas.get())<4:
-                        messagebox.showinfo('Error Dimensiones','el tablero debe tener una dimension minima de 4x4')
-                    else:
-                        db.filas = int(filas.get())
-                        db.columnas = int(columnas.get())
-                        db.tiempo = tiempo
-                        db.p1 = p1.lower()
-                        db.p2 = p2.lower()
-            except:
-                messagebox.showinfo('Dato Erroneo','los parametros del tablero deben ser numeros')
+                    db.filas = filas
+                    db.columnas = columnas
+                    db.tiempo = tiempo
+                    db.p1 = p1.lower()
+                    db.p2 = p2.lower()
+                    self.abrir_ventana_tablero(ventana)
+            #except:
+            #    print('entra al except')
+            #    messagebox.showinfo('Dato Erroneo','los parametros del tablero deben ser numeros')
+            
 #----------------------------------------------------------------------------------------------
     def add_componentes(self,ventana):
         lb_title = tk.Label(ventana,text='Parametros de la partida',pady=10)
@@ -78,7 +91,7 @@ class v_parametros():
         lb_tablero = tk.Label(ventana,text='Tablero')
         lb_tablero.place(x=400,y=50)
         
-        btn = tk.Button(ventana,text='Empezar',command=lambda:self.acciones(cb_colorP1,cb_colorP2,entryX,entryY,entryTime))
+        btn = tk.Button(ventana,text='Empezar',command=lambda:self.acciones(cb_colorP1,cb_colorP2,entryX,entryY,entryTime,ventana))
         btn.place(x=425,y=200)
 
         #print(comboExample.current(), comboExample.get())

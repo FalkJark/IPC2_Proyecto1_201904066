@@ -1,3 +1,4 @@
+from random import choice
 # Partida actual
 
 #Tablero
@@ -6,3 +7,4 @@ columnas = 0
 tiempo = 0
 p1 = ''
 p2 = ''
+turno_actual = choice([1,2])

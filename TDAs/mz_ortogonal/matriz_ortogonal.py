@@ -12,8 +12,9 @@ class nodo_matriz():
 
 
 class mz_ortogonal():
-
-    def __init__(self,tamx,tamy):
+#-----------------------------------------------------------------------------------------------
+    def __init__(self,nombre,tamx,tamy):
+        self.nombre = nombre
         listax = lx.lista_cabecerax()
         listay = ly.lista_cabeceray()
 
@@ -24,7 +25,7 @@ class mz_ortogonal():
         self.abajo = listay
 
         self.llenar_matriz()
-
+#-----------------------------------------------------------------------------------------------
     def mostrar_columna(self,col):
         headx = self.derecha.head
         tamx = self.derecha.dimension
@@ -40,7 +41,7 @@ class mz_ortogonal():
                 #print('valor: '+str(headx.valor)+', x: '+str(headx.posx)+', y: '+str(headx.posy)) 
                 print('('+str(headx.posx)+','+str(headx.posy)+') = '+str(headx.valor))
                 headx = headx.abajo
-
+#-----------------------------------------------------------------------------------------------
     def mostrar_fila(self,fila):
         heady = self.abajo.head
         tamy = self.abajo.dimension
@@ -55,9 +56,7 @@ class mz_ortogonal():
             while heady != None:
                 print('('+str(heady.posx)+','+str(heady.posy)+') = '+str(heady.valor)) 
                 heady = heady.derecha
-
-
-
+#-----------------------------------------------------------------------------------------------
     def llenar_matriz(self):
         #Valores
         ejex = self.derecha
@@ -78,7 +77,7 @@ class mz_ortogonal():
             conty = 0
             for i in range(tamy):
                 #print('i= '+str(i))
-                nodo_nuevo = nodo_matriz(str(contx+conty),headx.coordenadax,conty)
+                nodo_nuevo = nodo_matriz('Nulo',headx.coordenadax,conty)
                 if i == 0:
                     nodo_nuevo.arriba = headx_abajo
                     anteriorx = headx_abajo
@@ -95,10 +94,10 @@ class mz_ortogonal():
         # PASO 2: Conectar la primera columna con el eje de las Y's
         headx = self.derecha.head
         pivotex = headx.abajo
-        print('primer nodo: '+str(pivotex.valor))
+        #print('primer nodo: '+str(pivotex.valor))
         heady = self.abajo.head
         while pivotex != None:
-            print('posY: '+str(heady.coordenaday)+', pivote: '+str(pivotex.valor))
+            #print('posY: '+str(heady.coordenaday)+', pivote: '+str(pivotex.valor))
             heady.derecha = pivotex
             pivotex.izquierda = heady
             pivotex = pivotex.abajo
@@ -120,3 +119,58 @@ class mz_ortogonal():
                 headx2 = headx2.abajo
             headx = headx.derecha
             head_sig = head_sig.derecha
+#-----------------------------------------------------------------------------------------------
+    def obtener_valor(self,x,y):
+  
+        ejex = self.derecha
+        ejey = self.abajo
+        tamx = ejex.dimension
+        tamy = ejey.dimension 
+        
+        if x > tamx-1 or y > tamy-1:
+            return 'dato fuera de la matriz'
+        else:
+            conty = 0
+            headx = ejex.head
+            #heady = ejey.head
+            #print('x: '+str(headx.coordenadax))
+            while headx.coordenadax != x:
+                headx = headx.derecha
+                #print('x: '+str(headx.coordenadax))
+
+            while conty != (y+1):
+                headx=headx.abajo
+                #print('y:'+str(headx.posy))
+                conty += 1
+                #print('cont: '+str(conty))
+            #v = [headx.valor,headx.posx,headx.posy]
+            v = headx.valor
+            return v
+
+    def reemplazar_valor(self,x,y,valor):
+  
+        ejex = self.derecha
+        ejey = self.abajo
+        tamx = ejex.dimension
+        tamy = ejey.dimension 
+        
+        if x > tamx-1 or y > tamy-1:
+            print('dato fuera de la matriz')
+        else:
+            conty = 0
+            headx = ejex.head
+            #heady = ejey.head
+            #print('x: '+str(headx.coordenadax))
+            while headx.coordenadax != x:
+                headx = headx.derecha
+                #print('x: '+str(headx.coordenadax))
+
+            while conty != (y+1):
+                headx=headx.abajo
+                #print('y:'+str(headx.posy))
+                conty += 1
+                #print('cont: '+str(conty))
+            headx.valor = valor
+            print('todo bien')
+            #v = [headx.valor,headx.posx,headx.posy]
+            #return v
