@@ -77,7 +77,7 @@ class mz_ortogonal():
             conty = 0
             for i in range(tamy):
                 #print('i= '+str(i))
-                nodo_nuevo = nodo_matriz('Nulo',headx.coordenadax,conty)
+                nodo_nuevo = nodo_matriz('nulo',headx.coordenadax,conty)
                 if i == 0:
                     nodo_nuevo.arriba = headx_abajo
                     anteriorx = headx_abajo
@@ -146,7 +146,7 @@ class mz_ortogonal():
             #v = [headx.valor,headx.posx,headx.posy]
             v = headx.valor
             return v
-
+#-------------------------------------------------------------
     def reemplazar_valor(self,x,y,valor):
   
         ejex = self.derecha
@@ -174,3 +174,115 @@ class mz_ortogonal():
             print('todo bien')
             #v = [headx.valor,headx.posx,headx.posy]
             #return v
+#--------------------------------------------------------------
+    def obtener_nodo(self,x,y):
+        ejex = self.derecha
+        ejey = self.abajo
+        tamx = ejex.dimension
+        tamy = ejey.dimension 
+        
+        if x > tamx-1 or y > tamy-1:
+            return 'dato fuera de la matriz'
+        else:
+            conty = 0
+            headx = ejex.head
+            while headx.coordenadax != x:
+                headx = headx.derecha
+            while conty != (y+1):
+                headx=headx.abajo
+                conty += 1
+            return headx
+# ---------------------------------------------------------------
+    def insertar_pieza(self,x,y,pieza,color):
+        # letra l = 1
+        # letra l inversa = 2
+        # barra horizontal = 3
+        # barra vertical = 4
+        # cuadrado = 5
+        # piramide = 6
+        nodo_main = self.obtener_nodo(x,y)
+        
+
+        #-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+        if pieza == 3: #//////// BARRA HORIZONTAL
+            validar = True    
+            for i in range(4):
+                if nodo_main == None:
+                    print('el nodo no se puede poner')
+                    validar = False 
+                    break
+                if nodo_main.valor != 'nulo':        
+                    print('el nodo no se puede poner')
+                    validar = False 
+                    break
+                
+                nodo_main = nodo_main.derecha
+            
+            if validar == True:
+                nodo_main = self.obtener_nodo(x,y)
+                for i in range(4):
+                    nodo_main.valor = color 
+                    nodo_main = nodo_main.derecha
+
+        #-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+        elif pieza == 4: #//////// BARRA VERTICAL
+            validar = True    
+            for i in range(4):
+                if nodo_main == None:
+                    print('el nodo no se puede poner')
+                    validar = False 
+                    break
+                if nodo_main.valor != 'nulo':        
+                    print('el nodo no se puede poner')
+                    validar = False 
+                    break
+                
+                nodo_main = nodo_main.abajo
+            
+            if validar == True:
+                nodo_main = self.obtener_nodo(x,y)
+                for i in range(4):
+                    nodo_main.valor = color 
+                    nodo_main = nodo_main.abajo
+        
+        #-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+        elif pieza == 5: #//////// CUADRADO
+            validar = True    
+              
+            if nodo_main.valor != 'nulo':        
+                print('el nodo no se puede poner')
+                validar = False 
+            else:
+                nodo_main  = nodo_main.derecha
+                if nodo_main.valor != 'nulo' or nodo_main == None:
+                    print('el nodo no se puede poner')
+                    validar = False
+                else:
+                    nodo_main  = nodo_main.abajo
+                    if nodo_main.valor != 'nulo' or nodo_main == None:
+                        print('el nodo no se puede poner')
+                        validar = False
+                    else:
+                        nodo_main  = nodo_main.izquierda
+                        if nodo_main.valor != 'nulo' or nodo_main == None:
+                            print('el nodo no se puede poner')
+                            validar = False
+            
+            if validar == True:
+                nodo_main = self.obtener_nodo(x,y)
+                nodo_main.valor = color
+                nodo_main = nodo_main.derecha
+                nodo_main.valor = color
+                nodo_main = nodo_main.abajo
+                nodo_main.valor = color
+                nodo_main = nodo_main.izquierda
+                nodo_main.valor = color
+        
+        
+        
+        
+        
+        else:
+            print('la pieza no existe')
+
+

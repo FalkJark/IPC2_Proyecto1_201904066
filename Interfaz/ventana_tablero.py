@@ -38,6 +38,8 @@ class v_tablero():
         root.withdraw()
         ventana_tablero.focus_force()
 #-----------------------------------------------------------------------
+
+#-----------------------------------------------------------------------
     def centrar(self,root):
         ancho_ventana = 850
         alto_ventana = 500
@@ -55,12 +57,12 @@ class v_tablero():
         new_img = ImageTk.PhotoImage(resized)
         lb_tab = tk.Label(ventana,image=new_img)
         lb_tab.place(x=20,y=20)
-
+        '''
         global futura_pieza
         futura_pieza = ImageTk.PhotoImage(file='Imagenes/rec_v.gif')
         lb_tab = tk.Label(ventana,image=futura_pieza)
         lb_tab.place(x=630,y=200)
-
+        '''
         lb_x = tk.Label(ventana,text='Columna:')
         lb_y = tk.Label(ventana,text='Fila:')
         lb_x.place(x=20,y=440)

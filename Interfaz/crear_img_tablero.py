@@ -61,10 +61,15 @@ def crear_tablero(matriz):
     file.write(aux)
 
     # crear los nodos matriz
+
     group = 2
     for j in range(ejey.dimension):
         for i in range(ejex.dimension):
-            file.write('n'+str(i)+'_'+str(j)+' [label = "'+str(matriz.obtener_valor(i,j))+'" width = 1.5, group = '+str(group+i)+' ];\n')
+            color = 'transparent'
+            if str(matriz.obtener_valor(i,j)) != 'nulo':
+                color = str(matriz.obtener_valor(i,j))
+
+            file.write('n'+str(i)+'_'+str(j)+' [label = "'+str(matriz.obtener_valor(i,j))+'", style = filled, fillcolor='+color+',width = 1.5, group = '+str(group+i)+' ];\n')
             #print(str(i)+','+str(j))
 
     file.write('\n')

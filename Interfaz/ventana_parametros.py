@@ -30,27 +30,27 @@ class v_parametros():
         elif filas == '' or columnas == '' or tiempo == '':
             messagebox.showinfo('Dato Vacio','llena todos los campos del tablero')
         else:
-            #try:
-            tiempo = int(tiempo.get())
-            filas = int(filas.get())
-            columnas = int(columnas.get())
-            print('entra al try')
-            
-            if tiempo<15 or tiempo>60:
-                messagebox.showinfo('Exceso','el tiempo no puede ser mayor de 60 y menor de 15 seg')
-            else:
-                if int(filas)<4 or int(columnas)<4:
-                    messagebox.showinfo('Error Dimensiones','el tablero debe tener una dimension minima de 4x4')
+            try:
+                tiempo = int(tiempo.get())
+                filas = int(filas.get())
+                columnas = int(columnas.get())
+                print('entra al try')
+                
+                if tiempo<15 or tiempo>60:
+                    messagebox.showinfo('Exceso','el tiempo no puede ser mayor de 60 y menor de 15 seg')
                 else:
-                    db.filas = filas
-                    db.columnas = columnas
-                    db.tiempo = tiempo
-                    db.p1 = p1.lower()
-                    db.p2 = p2.lower()
-                    self.abrir_ventana_tablero(ventana)
-            #except:
-            #    print('entra al except')
-            #    messagebox.showinfo('Dato Erroneo','los parametros del tablero deben ser numeros')
+                    if int(filas)<4 or int(columnas)<4:
+                        messagebox.showinfo('Error Dimensiones','el tablero debe tener una dimension minima de 4x4')
+                    else:
+                        db.filas = filas
+                        db.columnas = columnas
+                        db.tiempo = tiempo
+                        db.p1 = p1.lower()
+                        db.p2 = p2.lower()
+                        self.abrir_ventana_tablero(ventana)
+            except:
+                print('entra al except')
+                messagebox.showinfo('Dato Erroneo','los parametros del tablero deben ser numeros')
             
 #----------------------------------------------------------------------------------------------
     def add_componentes(self,ventana):
