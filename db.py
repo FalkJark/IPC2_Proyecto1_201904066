@@ -8,3 +8,4 @@ tiempo = 0
 p1 = ''
 p2 = ''
 turno_actual = choice([1,2])
+figura = choice([3,4,5])

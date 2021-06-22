@@ -18,7 +18,7 @@ class v_main():
         #btn_ayuda.place(x=150,y=150)
 
     def bhelp(self):
-        messagebox.showinfo('Informacion','Puedes encontrar el repositorio en:\n https://github.com/FalkJark/IPC2_Practica1_201904066')
+        messagebox.showinfo('Informacion','Puedes encontrar el repositorio en:\n https://github.com/FalkJark/IPC2_Proyecto1_201904066')
 
 #-----------------------------------------------------------------------
     def centrar(self,root):

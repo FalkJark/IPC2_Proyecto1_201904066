@@ -7,7 +7,7 @@ import db
 from Interfaz.mostrar_grafo import crear_graphviz
 from Interfaz.crear_img_tablero import crear_tablero
 from PIL import Image, ImageTk
-
+from tkinter import messagebox, ttk
 
 class v_tablero():
     def __init__(self,root):
@@ -38,6 +38,24 @@ class v_tablero():
         root.withdraw()
         ventana_tablero.focus_force()
 #-----------------------------------------------------------------------
+    def colocar(self,ventana,matriz,img_vieja,x,y):
+        numbers = False
+        try:
+            x = int(x.get())
+            y = int(y.get())
+            numbers = True
+        except:
+            messagebox.showinfo('Error','Las coordenadas deben ser numeros')
+        if numbers == True:
+            matriz.insertar_pieza(x,y,db.figura,'green')
+            crear_tablero(matriz)
+            img_vieja.destroy()
+            global new_img
+            imag1 = Image.open('tablero.gif')
+            resized = imag1.resize((550,400),Image.ANTIALIAS)
+            new_img = ImageTk.PhotoImage(resized)
+            lb_tab = tk.Label(ventana,image=new_img)
+            lb_tab.place(x=20,y=20)
 
 #-----------------------------------------------------------------------
     def centrar(self,root):
@@ -76,6 +94,6 @@ class v_tablero():
         entryY = tk.Entry(ventana, width=4, textvariable=posy,bg='pink')
         entryY.place(x=200,y=440)     
 
-        btn_colocar = tk.Button(ventana,text='Colocar')
+        btn_colocar = tk.Button(ventana,text='Colocar',command=lambda:self.colocar(ventana,tablero,lb_tab,entryX,entryY))
         btn_colocar.place(x=250,y=440)
         
